@@ -28,7 +28,7 @@ jobs:
         - run: ls -a
         - run: pwd
         - run: chmod +x ./smoke.sh
-        - run: ./smoke.sh
+        - run: .~/infrastructure/smoke.sh
 
         
 
