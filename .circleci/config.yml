@@ -13,6 +13,7 @@ jobs:
       - run: echo $(pwd)
       - run: echo $(ls -a)
       - run: cat ~/.aws/credentials
+      - run: find ./setup* -type f
       - run: cd .. && ./setup.sh
 
 workflows:
