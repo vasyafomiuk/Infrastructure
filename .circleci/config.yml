@@ -25,7 +25,9 @@ jobs:
       - image: python:3.7-alpine3.11         
     steps:
         - checkout
-        - run: chmod +x-r ./smoke.sh
+        - run: ls -a
+        - run: pwd
+        - run: chmod +x ./smoke.sh
         - run: ./smoke.sh
 
         
