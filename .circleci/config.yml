@@ -17,10 +17,22 @@ jobs:
           name: configure server
           command: |
             ansible-playbook -i inventory.txt playbook.yml
-            
+              
+
+  smoke_test:
+    working_directory: ~/infrastructure
+    docker:
+      - image: python:3.7-alpine3.11         
+    steps:
+        - checkout
+        - run: ./smoke.sh
+
         
 
 workflows:
   pipeline:
     jobs:
       - configure_infrastructure
+      - smoke_test:
+          requires: 
+            - configure_infrastructure
