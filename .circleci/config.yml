@@ -27,7 +27,7 @@ jobs:
         - checkout
         - run: ls -a
         - run: pwd
-        - run: chmod +x ./smoke.sh
+        - run: chmod o+x ./smoke.sh
         - run: .~/infrastructure/smoke.sh
 
         
