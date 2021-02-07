@@ -37,4 +37,4 @@
 
 - name: run server
   become: true
-  shell: pm2 start /home/ubuntu/data/index.js
+  shell: pm2 start -f /home/ubuntu/data/index.js
