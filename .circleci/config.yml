@@ -1,7 +1,8 @@
 version: 2.1
 
 jobs:
-  deploy_cloudformation: 
+  deploy_cloudformation:
+    working_directory: ~/infrastructure
     docker: 
       - image: amazon/aws-cli
     steps:
@@ -11,6 +12,7 @@ jobs:
       - run: echo "aws_secret_access_key=$aws_secret_access_key" >> ~/.aws/credentials
       - run: echo $(pwd)
       - run: echo $(ls -a)
+      - run: cat ~/.aws/credentials
       - run: cd .. && ./setup.sh
 
 workflows:
