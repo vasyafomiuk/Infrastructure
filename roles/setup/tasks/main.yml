@@ -8,16 +8,17 @@
 - name: "install node"
   become: yes
   apt:
-    name: ["nodejs"]
+    name: ["nodejs", "npm"]
     state: latest
     update_cache: true
 
 - name: install pm2
   become: true
   npm: 
-    name: ["pm2"]
-    state: latest
-    update_cache: true      
+    name: pm2
+    global: yes
+    production: yes
+    state: present     
 
 - name: create folder for data 
   become: true 
