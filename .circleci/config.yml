@@ -6,6 +6,7 @@ jobs:
     docker: 
       - image: amazon/aws-cli
     steps:
+      - checkout
       - run: mkdir ~/.aws
       - run: echo "[default]" >> ~/.aws/credentials
       - run: echo "aws_access_key_id=$aws_access_key_id" >> ~/.aws/credentials
