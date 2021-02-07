@@ -9,9 +9,10 @@ jobs:
       - run: echo "[default]" >> ~/.aws/credentials
       - run: echo "aws_access_key_id=$aws_access_key_id" >> ~/.aws/credentials
       - run: echo "aws_secret_access_key=$aws_secret_access_key" >> ~/.aws/credentials
-      - run: ./setup.sh
+      - run: echo $(pwd)
+      - run: cd .. && ./setup.sh
 
 workflows:
-  welcome:
+  pipeline:
     jobs:
       - deploy_cloudformation
