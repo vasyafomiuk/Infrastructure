@@ -12,10 +12,10 @@
     state: latest
     update_cache: true
 
-- name: install apache2
+- name: install pm2
   become: true
-  apt: 
-    name: ["apache2"]
+  npm: 
+    name: ["pm2"]
     state: latest
     update_cache: true      
 
@@ -36,4 +36,4 @@
 
 - name: run server
   become: true
-  shell: node /home/ubuntu/data/index.js
+  shell: pm2 start /home/ubuntu/data/index.js

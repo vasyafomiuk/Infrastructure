@@ -16,7 +16,7 @@ jobs:
       - run: 
           name: configure server
           command: |
-            nohup ansible-playbook -i inventory.txt playbook.yml ; disown
+            ansible-playbook -i inventory.txt playbook.yml
             
         
 
