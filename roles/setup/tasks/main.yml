@@ -1,0 +1,39 @@
+---
+- name: "update apt packages."
+  become: yes
+  apt:
+    update_cache: yes 
+    upgrade: 'yes'
+
+- name: "install node"
+  become: yes
+  apt:
+    name: ["nodejs"]
+    state: latest
+    update_cache: true
+
+- name: install apache2
+  become: true
+  apt: 
+    name: ["apache2"]
+    state: latest
+    update_cache: true      
+
+- name: create folder for data 
+  become: true 
+  shell: mkdir -p /home/ubuntu/data 
+
+- name: give write permissions 
+  become: true 
+  shell: chmod -R 775 /home/ubuntu/data  
+
+- name: install index page
+  become: true
+  copy:
+    src: index.js
+    dest: /home/ubuntu/data/index.js
+    backup: yes
+
+- name: run server
+  become: true
+  shell: node /home/ubuntu/data/index.js
