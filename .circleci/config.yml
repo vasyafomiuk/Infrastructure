@@ -4,7 +4,7 @@ jobs:
   deploy_cloudformation:
     working_directory: ~/infrastructure
     docker: 
-      - image: amazon/aws-cli
+      - image: amazon/aws-cli:latest
     steps:
       - checkout
       - run: mkdir ~/.aws
@@ -12,7 +12,7 @@ jobs:
       - run: echo "aws_access_key_id=$aws_access_key_id" >> ~/.aws/credentials
       - run: echo "aws_secret_access_key=$aws_secret_access_key" >> ~/.aws/credentials
       - run: cat ~/.aws/credentials
-      - run: apt-get install -y sudo
+      - run: yum install sudo -y
       - run: sudo ./setup.sh
 
 workflows:
