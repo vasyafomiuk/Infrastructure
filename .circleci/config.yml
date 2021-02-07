@@ -13,6 +13,7 @@ jobs:
       - run: echo "aws_secret_access_key=$aws_secret_access_key" >> ~/.aws/credentials
       - run: cat ~/.aws/credentials
       - run: yum install sudo -y
+      - run: chmod u+x setup.sh
       - run: ./setup.sh
 
 workflows:
