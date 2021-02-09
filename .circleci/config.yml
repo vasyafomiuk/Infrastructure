@@ -1,16 +1,30 @@
 version: 2.1
 
+commands:
+  destroy_environment:
+    steps:
+      - run: chmod u+x destroy.yml
+      - run: 
+          name: Destroy environment
+          command: ./destroy.yml
+
 jobs:
+  create_infrastructure:
+    working_directory: ~/infrastructure
+    docker: 
+      - image: python:3.7-alpine3.11
+    steps:
+        - checkout
+        - persist_to_workspace:
+            root: ~/infrastructure
+            paths:
+              - '*'  
+              
   configure_infrastructure:
     working_directory: ~/infrastructure
     docker: 
       - image: python:3.7-alpine3.11
     steps:
-      - checkout
-      - persist_to_workspace:
-          root: ~/infrastructure
-          paths:
-            - '*'
       - add_ssh_keys:
           fingerprints: ["1c:85:2e:39:d5:fb:01:5e:84:25:a8:b8:ad:86:cc:14"]
       - run:
@@ -22,7 +36,6 @@ jobs:
           command: |
             ansible-playbook -i inventory.txt playbook.yml
               
-
   smoke_test:
     working_directory: ~/infrastructure
     docker:
@@ -36,7 +49,10 @@ jobs:
             command: |
               apk --no-cache add curl
         - run: chmod u+x smoke.sh
-        - run: ./smoke.sh
+        - run: 
+            command: return 1 #simulate error
+        - destroy_environment
+          when: on_fail
 
         
 
