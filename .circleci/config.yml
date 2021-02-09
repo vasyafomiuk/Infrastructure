@@ -2,12 +2,13 @@ version: 2.1
 
 jobs:
   configure_infrastructure:
+    working_directory: ~/infrastructure
     docker: 
       - image: python:3.7-alpine3.11
     steps:
       - checkout
       - persist_to_workspace:
-          root: /tmp/workspace
+          root: ~/infrastructure
           paths:
             - '*'
       - add_ssh_keys:
@@ -23,11 +24,12 @@ jobs:
               
 
   smoke_test:
+    working_directory: ~/infrastructure
     docker:
       - image: python:3.7-alpine3.11         
     steps:
         - attach_workspace:
-            at: /tmp/workspace
+            at: ~/infrastructure
         - run: ls -a
         - run:
             name: install curl
