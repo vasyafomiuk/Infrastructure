@@ -7,6 +7,10 @@ jobs:
       - image: python:3.7-alpine3.11
     steps:
       - checkout
+      - save_cache:
+          key: my-cache
+          paths:
+            - ".git"
       - add_ssh_keys:
           fingerprints: ["1c:85:2e:39:d5:fb:01:5e:84:25:a8:b8:ad:86:cc:14"]
       - run:
@@ -24,8 +28,14 @@ jobs:
     docker:
       - image: python:3.7-alpine3.11         
     steps:
-        - checkout
+        - restore_cache:
+            keys: 
+              - my-cache
         - run: ls -a
+        - run:
+            name: install curl
+            command: |
+              apk --no-cache add curl
         - run: chmod u+x smoke.sh
         - run: ./smoke.sh
 
