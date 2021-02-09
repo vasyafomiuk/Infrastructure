@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 if curl -s --head "https://18.237.69.40:3000" 
 then
