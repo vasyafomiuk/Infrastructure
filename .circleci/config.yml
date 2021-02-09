@@ -49,10 +49,11 @@ jobs:
             command: |
               apk --no-cache add curl
         - run: chmod u+x smoke.sh
-        - run: 
-            command: return 1 #simulate error
-        - destroy_environment
-          when: on_fail
+        - run: return 1 #simulate error
+        - run:
+            name: Destroy environment
+            command: destroy_environment
+            when: on_fail
 
         
 
