@@ -10,7 +10,7 @@ jobs:
       - save_cache:
           key: my-cache
           paths:
-            - ".git"
+            - '*'
       - add_ssh_keys:
           fingerprints: ["1c:85:2e:39:d5:fb:01:5e:84:25:a8:b8:ad:86:cc:14"]
       - run:
