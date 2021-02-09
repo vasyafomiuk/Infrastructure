@@ -18,16 +18,17 @@ jobs:
         - persist_to_workspace:
             root: ~/infrastructure
             paths:
-              - '*'  
+              - '*'
+        - run: ls -a      
+        - run: chmod u+x setup.sh
+        - run: ./setup.sh      
+      
               
   configure_infrastructure:
     working_directory: ~/infrastructure
     docker: 
       - image: python:3.7-alpine3.11
-    steps:
-      - attach_workspace:
-          at: ~/infrastructure
-      - run: ls -a    
+    steps:  
       - add_ssh_keys:
           fingerprints: ["1c:85:2e:39:d5:fb:01:5e:84:25:a8:b8:ad:86:cc:14"]
       - run:
@@ -63,7 +64,10 @@ jobs:
 workflows:
   pipeline:
     jobs:
-      - configure_infrastructure
+      - create_infrastructure
+      - configure_infrastructure:
+          requires: 
+            - create_infrastructure
       - smoke_test:
           requires: 
             - configure_infrastructure
