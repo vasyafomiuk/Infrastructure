@@ -21,10 +21,6 @@ jobs:
         - run: echo "aws_access_key_id=$aws_access_key_id" >> ~/.aws/credentials
         - run: echo "aws_secret_access_key=$aws_secret_access_key" >> ~/.aws/credentials
         - run: chmod u+x setup.sh
-        - persist_to_workspace:
-            root: ~/infrastructure
-            paths:
-              - '*'
         - run: ./setup.sh      
       
               
@@ -32,7 +28,8 @@ jobs:
     working_directory: ~/infrastructure
     docker: 
       - image: python:3.7-alpine3.11
-    steps:  
+    steps:
+      - checkout  
       - add_ssh_keys:
           fingerprints: ["1c:85:2e:39:d5:fb:01:5e:84:25:a8:b8:ad:86:cc:14"]
       - run:
@@ -43,6 +40,10 @@ jobs:
           name: configure server
           command: |
             ansible-playbook -i inventory.txt playbook.yml
+      - persist_to_workspace:
+            root: ~/infrastructure
+            paths:
+              - '*'      
               
   smoke_test:
     working_directory: ~/infrastructure
