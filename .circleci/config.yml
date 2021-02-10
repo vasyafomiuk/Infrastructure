@@ -44,7 +44,7 @@ jobs:
           command: |
             apk add --update ansible
       - run: ls -a      
-      - run: cat inventory-file.txt
+      - run: cat inventory.txt
       - run: 
           name: configure server
           command: |
