@@ -14,7 +14,7 @@ if ! aws cloudformation describe-stacks --stack-name $stackName > /dev/null 2>&1
     --region=us-west-2
 else
  echo -e "\nStack already exist, updating ..."
-    output=$(aws cloudformation update-stack --stack-name foo 2>&1)
+    output=$(aws cloudformation update-stack --stack-name $stackName 2>&1)
     RESULT=$?
     if [ $RESULT -eq 0 ]; then
         echo "$output"
