@@ -1,12 +1,13 @@
 version: 2.1
 
 commands:
-  destroy_environment:
+  destroy-environment:
     steps:
       - run: chmod u+x destroy.yml
       - run: 
           name: Destroy environment
           command: ./destroy.yml
+          when: on_fail
 
 jobs:
   create_infrastructure:
@@ -68,9 +69,11 @@ jobs:
             command: |
               apk --no-cache add curl
         - run: chmod u+x smoke.sh
-        - run: return 1 #simulate error
-        - destroy_environment
-          when: on_fail
+        - run: 
+            name: simualte error
+            command: |
+              return 1
+        - destroy-environment
         
 workflows:
   pipeline:
