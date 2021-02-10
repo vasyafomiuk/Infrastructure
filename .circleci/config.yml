@@ -36,12 +36,11 @@ jobs:
             paths:
               - ~/infrastructure/inventory.txt
               - ~/.aws/credentials
-
               
   configure_infrastructure:
     working_directory: ~/infrastructure
     docker: 
-      - image: amazon/aws-cli:latest
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
       - restore_cache: 
@@ -51,7 +50,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            yum install ansible
+              apk add --update ansible
       - run: ls -a      
       - run: cat inventory.txt
       - run: 
