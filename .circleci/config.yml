@@ -6,7 +6,7 @@ commands:
       - run: chmod u+x destroy.yml
       - run: 
           name: Destroy environment
-          command: ./destroy.yml
+          command: ./destroy.sh
           when: on_fail
 
 jobs:
