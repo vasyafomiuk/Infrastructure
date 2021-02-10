@@ -21,15 +21,23 @@ jobs:
         - run: echo "aws_access_key_id=$aws_access_key_id" >> ~/.aws/credentials
         - run: echo "aws_secret_access_key=$aws_secret_access_key" >> ~/.aws/credentials
         - run: chmod u+x setup.sh
-        - run: ./setup.sh      
-      
+        - run: ./setup.sh
+        - run: aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=udacity-new" --output text >> inventory.txt
+        - save_cache:
+            key: inventory-file
+            paths:
+              - ~/infrastructure/inventory.txt
+
               
   configure_infrastructure:
     working_directory: ~/infrastructure
     docker: 
       - image: python:3.7-alpine3.11
     steps:
-      - checkout  
+      - checkout
+      - restore_cache: 
+          key: inventory-file
+      - run: cat inventory-file.txt
       - add_ssh_keys:
           fingerprints: ["1c:85:2e:39:d5:fb:01:5e:84:25:a8:b8:ad:86:cc:14"]
       - run:
