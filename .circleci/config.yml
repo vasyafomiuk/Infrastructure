@@ -69,6 +69,7 @@ jobs:
             command: |
               apk --no-cache add curl
         - run: chmod u+x smoke.sh
+        - run: chmod u+x destroy.sh
         - run: 
             name: simualte error
             command: |
