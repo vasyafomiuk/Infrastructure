@@ -70,6 +70,7 @@ jobs:
         - run: chmod u+x smoke.sh
         - run: return 1 #simulate error
         - destroy_environment
+          when: on_fail
         
 workflows:
   pipeline:
