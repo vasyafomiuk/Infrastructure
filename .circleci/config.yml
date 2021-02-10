@@ -1,6 +1,7 @@
 version: 2.1
 
 commands:
+
   destroy-environment:
     steps:
       - run: chmod u+x destroy.sh
@@ -8,6 +9,13 @@ commands:
           name: Destroy environment
           command: ./destroy.sh
           when: on_fail
+
+  setup_aws_credentials:
+    steps:
+      - run: mkdir ~/.aws     
+      - run: echo "[default]" >> ~/.aws/credentials
+      - run: echo "aws_access_key_id=$aws_access_key_id" >> ~/.aws/credentials
+      - run: echo "aws_secret_access_key=$aws_secret_access_key" >> ~/.aws/credentials        
 
 jobs:
   create_infrastructure:
@@ -18,11 +26,10 @@ jobs:
         - checkout
         - run: ls -a 
         - run: mkdir ~/.aws     
-        - run: echo "[default]" >> ~/.aws/credentials
-        - run: echo "aws_access_key_id=$aws_access_key_id" >> ~/.aws/credentials
-        - run: echo "aws_secret_access_key=$aws_secret_access_key" >> ~/.aws/credentials
+        - setup_aws_credentials
         - run: chmod u+x setup.sh
         - run: ./setup.sh
+        - run: echo " " >> inventory.txt
         - run: aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=udacity-new" --output text >> inventory.txt
         - run: cat inventory.txt
         - save_cache:
@@ -35,7 +42,7 @@ jobs:
   configure_infrastructure:
     working_directory: ~/infrastructure
     docker: 
-      - image: python:3.7-alpine3.11
+      - image: amazon/aws-cli:latest
     steps:
       - checkout
       - restore_cache: 
@@ -45,7 +52,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            apk add --update ansible
+            yum install ansible
       - run: ls -a      
       - run: cat inventory.txt
       - run: 
@@ -64,7 +71,8 @@ jobs:
     steps:
         - checkout
         - restore_cache: 
-            key: inventory-file    
+            key: inventory-file 
+        - setup_aws_credentials       
         - run: ls -a
         - run:
             name: install curl
