@@ -25,7 +25,6 @@ jobs:
     steps:
         - checkout
         - run: ls -a 
-        - run: mkdir ~/.aws     
         - setup_aws_credentials
         - run: chmod u+x setup.sh
         - run: ./setup.sh
