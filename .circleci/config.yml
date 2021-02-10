@@ -3,7 +3,7 @@ version: 2.1
 commands:
   destroy-environment:
     steps:
-      - run: chmod u+x destroy.yml
+      - run: chmod u+x destroy.sh
       - run: 
           name: Destroy environment
           command: ./destroy.sh
