@@ -64,6 +64,8 @@ jobs:
     docker:
       - image: amazon/aws-cli:latest   
     steps:
+        - run: yum install tar -y
+        - run: yum install gzip -y
         - attach_workspace:
             at: ~/infrastructure
         - setup_aws_credentials
