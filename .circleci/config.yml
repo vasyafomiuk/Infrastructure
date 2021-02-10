@@ -29,6 +29,7 @@ jobs:
             key: inventory-file
             paths:
               - ~/infrastructure/inventory.txt
+              - ~/.aws/credentials
 
               
   configure_infrastructure:
@@ -59,10 +60,12 @@ jobs:
   smoke_test:
     working_directory: ~/infrastructure
     docker:
-      - image: python:3.7-alpine3.11         
+      - image: amazon/aws-cli:latest   
     steps:
         - attach_workspace:
             at: ~/infrastructure
+        - restore_cache: 
+            key: inventory-file    
         - run: ls -a
         - run:
             name: install curl
