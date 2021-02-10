@@ -69,7 +69,7 @@ jobs:
         - run:
             name: install curl
             command: |
-              apk --no-cache add curl
+              yum install curl
         - run: chmod u+x smoke.sh
         - run: chmod u+x destroy.sh
         - run: 
