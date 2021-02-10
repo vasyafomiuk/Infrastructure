@@ -80,8 +80,7 @@ jobs:
         - run: chmod u+x destroy.sh
         - run: 
             name: simualte error
-            command: |
-              return 1
+            command: return 1
         - destroy-environment
         
 workflows:
