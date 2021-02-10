@@ -31,7 +31,7 @@ jobs:
         - run: echo " " >> inventory.txt
         - run: aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=udacity-new" --output text >> inventory.txt
         - run: cat inventory.txt
-        - run: yum install tar
+        - run: yum install tar -y
         - persist_to_workspace:
               root: ~/infrastructure
               paths:
